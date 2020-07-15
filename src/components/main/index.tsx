@@ -30,7 +30,7 @@ export default () => {
   const [giamTruBanThan, setGiamTruBanThan] = useState(gtbt)
   const [giamTruPhuThuoc, setGiamTruPhuThuoc] = useState(gtpt)
 
-  const [totalIncome, setTotalIncome] = useState(17137032)
+  const [totalIncome, setTotalIncome] = useState(0)
   const [nguoiPhuThuoc, setNguoiPhuThuoc] = useState(0)
 
   const tongThuNhapChiuThue = useMemo(() => totalIncome, [totalIncome]);
