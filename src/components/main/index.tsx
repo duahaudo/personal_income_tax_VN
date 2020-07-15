@@ -30,19 +30,19 @@ export default () => {
   const [giamTruBanThan, setGiamTruBanThan] = useState(gtbt)
   const [giamTruPhuThuoc, setGiamTruPhuThuoc] = useState(gtpt)
 
-  const [totalIncome, setTotalIncome] = useState(0)
-  const [nguoiPhuThuoc, setNguoiPhuThuoc] = useState(0)
+  const [totalIncome, setTotalIncome] = useState()
+  const [nguoiPhuThuoc, setNguoiPhuThuoc] = useState()
 
   const tongThuNhapChiuThue = useMemo(() => totalIncome, [totalIncome]);
 
-  const dongBhyt = useMemo(() => tongThuNhapChiuThue * bhyt, [tongThuNhapChiuThue])
-  const dongBhtn = useMemo(() => tongThuNhapChiuThue * bhtn, [tongThuNhapChiuThue])
-  const dongBhxh = useMemo(() => tongThuNhapChiuThue * bhxh, [tongThuNhapChiuThue])
+  const dongBhyt = useMemo(() => (tongThuNhapChiuThue || 0) * bhyt, [tongThuNhapChiuThue])
+  const dongBhtn = useMemo(() => (tongThuNhapChiuThue || 0) * bhtn, [tongThuNhapChiuThue])
+  const dongBhxh = useMemo(() => (tongThuNhapChiuThue || 0) * bhxh, [tongThuNhapChiuThue])
   const tongBaoHiem = useMemo(() => dongBhtn + dongBhxh + dongBhyt, [dongBhtn, dongBhxh, dongBhyt])
 
-  const mienGiamThue = useMemo(() => giamTruBanThan + (giamTruPhuThuoc * nguoiPhuThuoc), [nguoiPhuThuoc, giamTruPhuThuoc, giamTruBanThan])
+  const mienGiamThue = useMemo(() => giamTruBanThan + (giamTruPhuThuoc * (nguoiPhuThuoc || 0)), [nguoiPhuThuoc, giamTruPhuThuoc, giamTruBanThan])
   const cacKhoanGiamTru = useMemo(() => mienGiamThue + tongBaoHiem, [mienGiamThue, tongBaoHiem])
-  const thuNhapTinhThue = useMemo(() => tongThuNhapChiuThue - cacKhoanGiamTru, [tongThuNhapChiuThue, cacKhoanGiamTru])
+  const thuNhapTinhThue = useMemo(() => (tongThuNhapChiuThue || 0) - cacKhoanGiamTru, [tongThuNhapChiuThue, cacKhoanGiamTru])
   const thueSuat = useMemo(() => {
     const dvtTr = thuNhapTinhThue / dvt;
 
@@ -179,6 +179,10 @@ export default () => {
         <Col className="text-right">{displayCurrency(mienGiamThue)}</Col>
       </Row>
       <Row>
+        <Col>Miễn giảm người phụ thuộc </Col>
+        <Col className="text-right">{displayCurrency(giamTruPhuThuoc * (nguoiPhuThuoc || 0))}</Col>
+      </Row>
+      <Row>
         <Col>Thu nhập tính thuế</Col>
         <Col className="text-right">{displayCurrency(thuNhapTinhThue)}</Col>
       </Row>
@@ -196,7 +200,7 @@ export default () => {
       <Alert variant="primary"><h5>Tiền thực lãnh </h5></Alert>
       <Row>
         <Col>Tiền có thể mang về nhà </Col>
-        <Col className="text-danger text-right">{displayCurrency(tongThuNhapChiuThue - thuePhaiNop - tongBaoHiem)}</Col>
+        <Col className="text-danger text-right">{displayCurrency((tongThuNhapChiuThue || 0) - thuePhaiNop - tongBaoHiem)}</Col>
       </Row>
     </Container>
   </div>
