@@ -200,7 +200,7 @@ export default () => {
       <Alert variant="primary"><h5>Tiền thực lãnh </h5></Alert>
       <Row>
         <Col>Tiền có thể mang về nhà </Col>
-        <Col className="text-danger text-right">{displayCurrency((tongThuNhapChiuThue || 0) - thuePhaiNop - tongBaoHiem)}</Col>
+        <Col className="text-danger text-right">{!!tongThuNhapChiuThue ? displayCurrency((tongThuNhapChiuThue || 0) - thuePhaiNop - tongBaoHiem) : 0}</Col>
       </Row>
     </Container>
   </div>
